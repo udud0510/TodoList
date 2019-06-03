@@ -16,6 +16,7 @@ function addNewItem(list, itemText) {
 	listItem.id = 'li_' + id;
 	listItem.ondblclick = moveItem;
 	listItem.addEventListener('mouseover', mouseover);
+	listItem.addEventListener('mouseout', mouseout);
 	// 완료 작업 구분할 체크박스
 	var checkBox = document.createElement('input');
 	checkBox.type = 'checkbox';

@@ -7,14 +7,15 @@ function addNewItem(list, itemText) {
 	var date = new Date();
 	// 앞에 "" 붙여서 string 형식으로 만듦 안만들면 값이 커서 제대로 id에 값이 안들어감
 	var id = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
-	// 잘나오는지 검사 
+	// 잘나오는지 검사
 	// alert(id);
 	totalItems++;
 	// 리스트 목록
 	var listItem = document.createElement('li');
 	// 각 li태그에 이벤트 주기 위해서 구별 id 지정
-	listItem.id='li_'+id;
-	listItem.ondblclick=removeItem;
+	listItem.id = 'li_' + id;
+	listItem.ondblclick = moveItem;
+	listItem.addEventListener('mouseover', mouseover);
 	// 완료 작업 구분할 체크박스
 	var checkBox = document.createElement('input');
 	checkBox.type = 'checkbox';
@@ -24,12 +25,20 @@ function addNewItem(list, itemText) {
 	var span = document.createElement('span');
 	span.id = 'item_' + totalItems;
 	span.innerText = itemText;
+	
+
+	var pencilIcon = document.createElement('i');
+	pencilIcon.className = 'fa fa-pencil';
+	pencilIcon.id = 'pencilIcon_' + id;
+	pencilIcon.onclick = editItem;
+	
 	// 글씨를 눌렀을때 editItem 함수 호출
 	span.onclick = editItem;
 
 	listItem.appendChild(checkBox);
 	listItem.appendChild(span);
 	list.appendChild(listItem);
+	listItem.appendChild(pencilIcon);
 }
 
 // 엔터 눌렀을때 입력&공백만 있을때는 입력 안되게
@@ -80,16 +89,33 @@ function updateItemStatus() {
 	}
 }
 // 수정_편집 함수
-function editItem(){
+function editItem() {
 	// 새창을 띄우고 입력값 받기 위해 prompt 사용
-	var newText=prompt("수정하시겠습니까?");
+	var newText = prompt("수정하시겠습니까?");
 	if (!newText || newText === "" || newText === " ")
 		return false;
-	this.innerText=newText;
+	var spanId = this.id.replace('pencilIcon_', '');
+	var span = document.getElementById('item_' + spanId);
+
+	span.innerText = newText;
 }
-// 삭제 함수
-function removeItem(){
-	var listId=this.id.replace('li_','');
-	//해당 id 추출해서 안보이게하기
-	document.getElementById('li_'+listId).style.display="none";
+
+var donelist = document.getElementById('donelist');
+function moveItem() {
+	var listItemId = this.id.replace('li_', '');
+	var listItem = document.getElementById('li_' + listItemId);
+	donelist.appendChild(listItem);
+}
+
+
+function mouseover() {
+	var pencilIconId = this.id.replace('li_', '');
+	var pencilIcon = document.getElementById('pencilIcon_' + pencilIconId);
+	pencilIcon.style.visibility = 'visible';
+}
+
+function mouseout() {
+	var pencilIconId = this.id.replace('li_', '');
+	var pencilIcon = document.getElementById('pencilIcon_' + pencilIconId);
+	pencilIcon.style.visibility = 'hidden';
 }

@@ -35,11 +35,17 @@ function addNewItem(list, itemText) {
 	
 	// 글씨를 눌렀을때 editItem 함수 호출
 	span.onclick = editItem;
+	
+	var minusIcon = document.createElement('i');
+	minusIcon.className = 'fa fa-minus';
+	minusIcon.id = 'minusIcon_' + id;
+	minusIcon.onclick = deleteItem;
 
 	listItem.appendChild(checkBox);
 	listItem.appendChild(span);
 	list.appendChild(listItem);
 	listItem.appendChild(pencilIcon);
+	listItem.appendChild(minusIcon);
 }
 
 // 엔터 눌렀을때 입력&공백만 있을때는 입력 안되게
@@ -101,6 +107,12 @@ function editItem() {
 	span.innerText = newText;
 }
 
+// 삭제 함수
+function deleteItem(donelist){
+	var listItemId = this.id.replace('minusIcon_', '');
+	document.getElementById('li_'+listItemId).style.display='none';
+}
+
 var donelist = document.getElementById('donelist');
 function moveItem() {
 	var listItemId = this.id.replace('li_', '');
@@ -117,11 +129,21 @@ function moveItem() {
 function mouseover() {
 	var pencilIconId = this.id.replace('li_', '');
 	var pencilIcon = document.getElementById('pencilIcon_' + pencilIconId);
+	
+	var minusIconId = this.id.replace('li_', '');
+	var minusIcon = document.getElementById('minusIcon_' + minusIconId);
+
+	minusIcon.style.visibility = 'visible';
 	pencilIcon.style.visibility = 'visible';
 }
 
 function mouseout() {
 	var pencilIconId = this.id.replace('li_', '');
 	var pencilIcon = document.getElementById('pencilIcon_' + pencilIconId);
+
+	var minusIconId = this.id.replace('li_', '');
+	var minusIcon = document.getElementById('minusIcon_' + minusIconId);
+	
+	minusIcon.style.visibility = 'hidden';
 	pencilIcon.style.visibility = 'hidden';
 }

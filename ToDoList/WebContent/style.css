@@ -43,4 +43,11 @@ ul li {
     padding: 5px;
     visibility: hidden;
 }
+
+.fa-minus{
+    float: right;
+    padding: 5px;
+    visibility: hidden;
+    color: red;
+}
 </style>

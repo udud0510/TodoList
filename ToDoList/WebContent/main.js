@@ -95,7 +95,7 @@ function editItem() {
 	var newText = prompt("수정하시겠습니까?");
 	if (!newText || newText === "" || newText === " ")
 		return false;
-	var spanId = this.id.replace('pencilIcon_', '');
+	var spanId = this.id.replace('pencilIcon', '');
 	var span = document.getElementById('item_' + spanId);
 
 	span.innerText = newText;
@@ -105,9 +105,14 @@ var donelist = document.getElementById('donelist');
 function moveItem() {
 	var listItemId = this.id.replace('li_', '');
 	var listItem = document.getElementById('li_' + listItemId);
-	donelist.appendChild(listItem);
+	var listItemParentId = listItem.parentElement;
+	
+	if(listItemParentId==donelist){
+		todolist.appendChild(listItem);
+	}else{
+		donelist.appendChild(listItem);
+	}
 }
-
 
 function mouseover() {
 	var pencilIconId = this.id.replace('li_', '');
